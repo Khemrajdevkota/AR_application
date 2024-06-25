@@ -75,7 +75,7 @@ async function activateXR() {
 
   let waterBottle;
   loader.load(
-    "https://github.com/Khemrajdevkota/AR_application/blob/main/headset.gltf",
+    "https://raw.githubusercontent.com/Khemrajdevkota/AR_application/main/headset.gltf",
     function (gltf) {
       waterBottle = gltf.scene;
     },
@@ -86,7 +86,7 @@ async function activateXR() {
   );
 
   session.addEventListener("select", (event) => {
-    if (waterBottle) {
+    if (waterBottle && reticle.visible) {
       const clone = waterBottle.clone();
       clone.position.copy(reticle.position);
       scene.add(clone);
@@ -122,6 +122,8 @@ async function activateXR() {
         reticle.visible = true;
         reticle.position.set(hitPose.transform.position.x, hitPose.transform.position.y, hitPose.transform.position.z);
         reticle.updateMatrixWorld(true);
+      } else {
+        reticle.visible = false;
       }
 
       // Render the scene with THREE.WebGLRenderer.
